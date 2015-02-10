@@ -4,19 +4,32 @@ var Input = ReactBootstrap.Input;
 var Table = ReactBootstrap.Table;
 
 
-var style = {maxWidth: 400, margin: 'auto'};
+var style = {maxWidth: 400, margin: 'auto', padding: '15px'};
+var tableStyle = {maxWidth: 600, margin: 'auto', padding: '10px'};
 
 var App = React.createClass({
   getInitialState: function(){
-    return {courses: []};
+    return {courses: [], showLogin: true};
   },
   render:function(){
-    return (
-      <div>
-        <LoginForm onButtonClick={this.loadGrades}/>
-        <GradesTable courses={this.state.courses}/>
-      </div>
-    );
+    if(this.state.showLogin){
+      return (
+        <div style= {style}>
+          <LoginForm onButtonClick={this.loadGrades}/>
+          <GradesTable courses={this.state.courses}/>
+        </div>
+        
+      );
+    }
+    else{
+      return(
+        <div style={tableStyle}>
+          <GradesTable courses={this.state.courses}/>
+        </div>
+      );
+    }
+  },
+  hideLogin: function(){
   },
   loadGrades: function(user){
     $.ajax({
@@ -25,6 +38,7 @@ var App = React.createClass({
       type:'POST',
       data: user,
       success: function(data){
+        this.setState({showLogin: false});
         this.setState({courses:data.courses});
       }.bind(this),
       error: function(xhr, status, err){
@@ -36,17 +50,21 @@ var App = React.createClass({
 var LoginForm = React.createClass({
   render: function(){
     return (
-      <div style= {style}>
-        <h2>Sign in with your m0xxxxx username and password</h2>
-        <Input type="text" label='student_id' defaultValue='m0xxxxx' ref='student_id'/>
-        <Input type='password' label='Password' defualtValue="secret" ref='password'/>
-        <Button bsSize="large" bsStyle="primary" block onClick={this.handleSubmit}> Log In </Button>
+      <div >
+        <form onSubmit = {this.handleSubmit}>
+          <h2>Sign in with your m0xxxxx username and password</h2>
+          <Input type="text" label='student_id'  ref='student'/>
+          <Input type='password' label='Password' defualtValue="secret" ref='password'/>
+          <Input type='submit' value = "Post" />
+        </form>
       </div>
     );
   },
-  handleSubmit: function(){
-    var user = this.refs.student_id;
-    var password = this.refs.student_id;
+  handleSubmit: function(e){
+    e.preventDefault();
+    var user = this.refs.student.getInputDOMNode().value.trim();
+    var password = this.refs.password.getInputDOMNode().value.trim();
+    console.log (user + " " + password);
     this.props.onButtonClick({user: user, password:password});
   }
 

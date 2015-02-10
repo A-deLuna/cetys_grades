@@ -36,10 +36,9 @@ app.post('/comments.json', function(req, res) {
   res.send(JSON.stringify(comments));
 });
 app.post('/grades', function(req, res){
-  console.log(req);
   var cookieJar = request.jar();
   var options = { url: 'http://micampus.mxl.cetys.mx/portal/auth/portal/default/default?loginheight=0', jar: cookieJar};
-  var postForm  = {j_username: 'm025528', j_password: 'dxvovquk'};
+  var postForm  = {j_username: req.body.user, j_password: req.body.password};
   var postOptions = {
     url: 'http://micampus.mxl.cetys.mx/portal/auth/portal/default/j_security_check',
     form: postForm , 
@@ -53,7 +52,7 @@ app.post('/grades', function(req, res){
     url: 'http://micampus.mxl.cetys.mx/portal/auth/portal/default/Academico/Consultar+boleta', 
     jar: cookieJar
   };
-  var i = 4;
+  var i = 3;
   var j = 8;
 
   function Course(name) {
@@ -68,7 +67,6 @@ app.post('/grades', function(req, res){
 
         request.get(getOptions, function(err, response, body){
 
-          console.log(body);
           var $ = cheerio.load(body);
           var rows = $('table.alumnos-tabla').children();
           var jsonResponse = {courses: []};
