@@ -1,0 +1,68 @@
+var Alert = ReactBootstrap.Alert;
+var Button = ReactBootstrap.Button;
+var Input = ReactBootstrap.Input;
+var Table = ReactBootstrap.Table;
+
+
+var style = {maxWidth: 400, margin: 'auto'};
+
+var App = React.createClass({
+  getInitialState: function(){
+    return {courses: []};
+  },
+  render:function(){
+    return (
+      <div>
+        <LoginForm onButtonClick={this.loadGrades}/>
+        <GradesTable courses={this.state.courses}/>
+      </div>
+    );
+  },
+  loadGrades: function(){
+    $.ajax({
+      url: 'grades',
+      dataType: 'json',
+      type:'POST',
+      success: function(data){
+        console.log(data);
+        this.setState({courses:data.courses});
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.error('grades',status, err.toString());
+      }.bind(this)
+    });
+  }
+});
+var LoginForm = React.createClass({
+  render: function(){
+    return (
+      <div style= {style}>
+        <h2>Sign in with your m0xxxxx username and password</h2>
+        <Input type="text" label='student_id' defaultValue='m0xxxxx' />
+        <Input type='password' label='Password' defualtValue="secret" />
+        <Button bsSize="large" bsStyle="primary" block onClick={this.props.onButtonClick}> Log In </Button>
+      </div>
+    );
+  }
+});
+var GradesTable = React.createClass({
+  render: function(){
+    var tableRows = this.props.courses.map(function(data){
+      return (
+        <tr>{data.name}</tr>
+      );
+    });
+    return (
+      <div className="table">
+      <Table>
+        {tableRows}
+      </Table>
+      </div>
+    );
+  }
+});
+
+React.render(
+  <App />,
+  document.getElementById("content") 
+);

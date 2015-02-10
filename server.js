@@ -15,6 +15,8 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+var cheerio = require('cheerio');
+var request = require('request');
 
 var comments = JSON.parse(fs.readFileSync('_comments.json'));
 
@@ -32,6 +34,63 @@ app.post('/comments.json', function(req, res) {
   fs.writeFile('_comments.json', JSON.stringify(comments))
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(comments));
+});
+app.post('/grades', function(req, res){
+  console.log(req);
+  var cookieJar = request.jar();
+  var options = { url: 'http://micampus.mxl.cetys.mx/portal/auth/portal/default/default?loginheight=0', jar: cookieJar};
+  var postForm  = {j_username: 'm025528', j_password: 'dxvovquk'};
+  var postOptions = {
+    url: 'http://micampus.mxl.cetys.mx/portal/auth/portal/default/j_security_check',
+    form: postForm , 
+    jar: cookieJar,
+    headers: {
+      'Referer': 'http://micampus.mxl.cetys.mx/portal/auth/portal/default/default?loginheight=0',
+    },
+    followAllRedirects: true
+  };
+  var getOptions= {
+    url: 'http://micampus.mxl.cetys.mx/portal/auth/portal/default/Academico/Consultar+boleta', 
+    jar: cookieJar
+  };
+  var i = 4;
+  var j = 8;
+
+  function Course(name) {
+    this.name = name;
+    this.grades = [];
+  }
+
+  request(options, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+
+      request.post(postOptions, function(err, response, body){
+
+        request.get(getOptions, function(err, response, body){
+
+          console.log(body);
+          var $ = cheerio.load(body);
+          var rows = $('table.alumnos-tabla').children();
+          var jsonResponse = {courses: []};
+
+          for(; i < rows.length; i++){
+            var name = rows.eq(i).children().first().text();
+            var course = new Course(name);
+
+            for(j = 8; j < 13; j++){
+              var grade = rows.eq(i).children().eq(j).text();
+              course.grades.push(grade);
+            }
+            jsonResponse.courses.push(course);
+          }
+          console.log(JSON.stringify(jsonResponse));
+          res.send(JSON.stringify(jsonResponse));
+          
+        });
+      });
+    }
+  });
+  
 });
 
 app.listen(3000);
