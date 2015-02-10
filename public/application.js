@@ -64,7 +64,6 @@ var LoginForm = React.createClass({
     e.preventDefault();
     var user = this.refs.student.getInputDOMNode().value.trim();
     var password = this.refs.password.getInputDOMNode().value.trim();
-    console.log (user + " " + password);
     this.props.onButtonClick({user: user, password:password});
   }
 
