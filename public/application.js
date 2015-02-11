@@ -55,7 +55,8 @@ var LoginForm = React.createClass({
       margin: "20px auto auto",
       backgroundColor: "rgb(250,250,210)",
       boxShadow: "0px 0px 25px rgb(201, 167, 0)",
-      padding: "15px 15px 0px"
+      padding: "15px 15px 15px 15px"
+
     };
     var pStyle= {
       textAlign: "center",
@@ -64,10 +65,10 @@ var LoginForm = React.createClass({
     };
     return (
       <div className="panel" style={divStyle}>
-        <form onSubmit = {this.handleSubmit}>
-          <img src="img/LogoCetys.gif" width="300px" alt="Logo Cetys" />
-          <Input addonBefore = {<Glyphicon glyph="user"/>} type="text" defaultValue="m0XXXXX" ref='student'/>
-          <Input addonBefore = {<Glyphicon glyph="lock"/>} type='password' defaultValue="********" ref='password'/>
+        <form onSubmit = {this.handleSubmit} style={{textAlign: "center" }}>
+          <img src="img/LogoCetys.gif" width="80%" alt="Logo Cetys" style={{marginBottom: "15px"}}/>
+          <Input addonBefore = {<Glyphicon glyph="user"/>} type="text" placeholder="m0XXXXX" ref='student'/>
+          <Input addonBefore = {<Glyphicon glyph="lock"/>} type='password' placeholder="Contrase&ntilde;a" ref='password'/>
           <Input type='checkbox' label = "Recordarme" />
           <Input type='submit' value = "Ingresar" bsStyle="warning"/>
         </form>
@@ -108,7 +109,7 @@ var GradesTable = React.createClass({
     });
     return (
       <div className="table">
-      <Table responsive>
+      <Table responsive striped>
         <tbody>
           {tableRows}
         </tbody>
