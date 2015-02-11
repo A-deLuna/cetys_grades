@@ -50,13 +50,17 @@ var App = React.createClass({
 var LoginForm = React.createClass({
   render: function(){
     return (
-      <div >
+      <a href="https://github.com/OneKorg/cetys_grades"><img style="position: absolute; top: 0; left: 0; border: 0;" src="calificacionescetys.me_files/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_orange_ff7600.png"></a>
+
+      <div class="panel" style="max-width: 400px; margin: 20px auto auto; background-color: rgb(250, 250, 210); box-shadow: 0px 0px 25px rgb(201, 167, 0); padding: 15px 15px 0px;">
         <form onSubmit = {this.handleSubmit}>
-          <h2>Sign in with your m0xxxxx username and password</h2>
-          <Input type="text" label='student_id'  ref='student'/>
-          <Input type='password' label='Password' defualtValue="secret" ref='password'/>
-          <Input type='submit' value = "Post" />
+          <img src="img/LogoCetys.gif" alt="Logo Cetys" />
+          <Input addonBefore = <Glyphicon glyph="user"/> type="text" defaultValue="m0XXXXX" ref='student'/>
+          <Input addonBefore = <Glyphicon glyph="lock"/> type='password' defaultValue="********" ref='password'/>
+          <Input type='checkbox' label = "Recordarme" />
+          <Input type='submit' value = "Ingresar" bsStyle="warning"/>
         </form>
+        <p style="text-align: center; font-style: italic; margin-bottom: 0px;">Por alumnos, para alumnos.</p>
       </div>
     );
   },
