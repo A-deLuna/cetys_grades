@@ -22,6 +22,7 @@ var App = React.createClass({
         <div style= {style}>
           <GithubRibbon href="https://github.com/OneKorg/cetys_grades"
                         target="_blank" 
+                        color="black"
                         position ="right">
             Fork me on Github
           </GithubRibbon>

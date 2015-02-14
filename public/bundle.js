@@ -25499,7 +25499,7 @@ module.exports = global.GitHubForkRibbon = React.createClass({displayName: "GitH
 
   render: function () {
 
-    var $__0=     this.props,position=$__0.position,href=$__0.href,target=$__0.target,other=(function(source, exclusion) {var rest = {};var hasOwn = Object.prototype.hasOwnProperty;if (source == null) {throw new TypeError();}for (var key in source) {if (hasOwn.call(source, key) && !hasOwn.call(exclusion, key)) {rest[key] = source[key];}}return rest;})($__0,{position:1,href:1,target:1});
+    var $__0=      this.props,position=$__0.position,href=$__0.href,target=$__0.target,color=$__0.color,other=(function(source, exclusion) {var rest = {};var hasOwn = Object.prototype.hasOwnProperty;if (source == null) {throw new TypeError();}for (var key in source) {if (hasOwn.call(source, key) && !hasOwn.call(exclusion, key)) {rest[key] = source[key];}}return rest;})($__0,{position:1,href:1,target:1,color:1});
 
     var ribbonStyle = [GitHubForkRibbon.baseStyle];
     var wrapperStyle = [GitHubForkRibbonWrapper.baseStyle];
@@ -25536,6 +25536,27 @@ module.exports = global.GitHubForkRibbon = React.createClass({displayName: "GitH
         wrapperStyle.push(GitHubForkRibbonWrapper.rightStyle);
         position = 'right'
         break;
+    }
+
+    switch(this.props.color){
+      case 'red':
+        ribbonStyle.push(GitHubForkRibbon.redColor);
+        break;
+
+      case 'orange':
+        ribbonStyle.push(GitHubForkRibbon.orangeColor);
+        break;
+
+      case 'black':
+        ribbonStyle.push(GitHubForkRibbon.blackColor);
+        break;
+
+      case 'green':
+        ribbonStyle.push(GitHubForkRibbon.greenColor);
+        break;
+
+      default:
+        ribbonStyle.push(GitHubForkRibbon.redColor);
     }
 
     return (
@@ -25581,7 +25602,7 @@ module.exports = {
       padding: '2px 0',
 
       /* Set the base colour */
-      backgroundColor: '#333',
+      backgroundColor: '#a00',
 
       /* Set a gradient: transparent black at the top to almost-transparent black at the bottom */
       // backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.15)))',
@@ -25624,6 +25645,22 @@ module.exports = {
       borderStyle: 'dotted',
       // borderColor: '#fff',
       borderColor: 'rgba(255, 255, 255, 0.7)'
+    }),
+
+    redColor: ReactStyle({
+      backgroundColor: '#a00',
+    }),
+
+    orangeColor: ReactStyle({
+      backgroundColor: '#f80',
+    }),
+
+    blackColor: ReactStyle({
+      backgroundColor: '#333',
+    }),
+
+    greenColor: ReactStyle({
+      backgroundColor: '#090',
     }),
 
     leftStyle: ReactStyle({
@@ -26030,6 +26067,7 @@ var App = React.createClass({displayName: "App",
         React.createElement("div", {style: style}, 
           React.createElement(GithubRibbon, {href: "https://github.com/OneKorg/cetys_grades", 
                         target: "_blank", 
+                        color: "black", 
                         position: "right"}, 
             "Fork me on Github"
           ), 
