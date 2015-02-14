@@ -25581,7 +25581,7 @@ module.exports = {
       padding: '2px 0',
 
       /* Set the base colour */
-      backgroundColor: '#a00',
+      backgroundColor: '#333',
 
       /* Set a gradient: transparent black at the top to almost-transparent black at the bottom */
       // backgroundImage: '-webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.15)))',
