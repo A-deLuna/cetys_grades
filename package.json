@@ -1,12 +1,13 @@
 {
-  "name": "react-tutorial",
+  "name": "cetys-tutorial",
   "version": "0.0.0",
-  "description": "Code from the React tutorial.",
+  "description": "Making the student experience less painful",
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.4.3",
     "cheerio": "^0.18.0",
     "express": "^4.4.5",
+    "react": "^0.12.2",
     "request": "^2.53.0"
   },
   "devDependencies": {},
@@ -16,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/reactjs/react-tutorial.git"
+    "url": "https://github.com/onekorg/cetys_grades"
   },
   "keywords": [
     "react",
@@ -24,9 +25,8 @@
     "comment",
     "example"
   ],
-  "author": "petehunt",
+  "author": "Antonio de Luna",
   "bugs": {
-    "url": "https://github.com/reactjs/react-tutorial/issues"
-  },
-  "homepage": "https://github.com/reactjs/react-tutorial"
+    "url": "https://github.com/onekorg/cetys_grades/issues"
+  }
 }
