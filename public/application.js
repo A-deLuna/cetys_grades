@@ -1,3 +1,7 @@
+var ReactBootstrap = require ('react-bootstrap');
+var React = require('react');
+var GithubRibbon = require('react-github-fork-ribbon');
+
 var Alert = ReactBootstrap.Alert;
 var Button = ReactBootstrap.Button;
 var Input = ReactBootstrap.Input;
@@ -16,6 +20,11 @@ var App = React.createClass({
     if(this.state.showLogin){
       return (
         <div style= {style}>
+          <GithubRibbon href="https://github.com/OneKorg/cetys_grades"
+                        target="_blank" 
+                        position ="right">
+            Fork me on Github
+          </GithubRibbon>
           <LoginForm onButtonClick={this.loadGrades}/>
           <GradesTable courses={this.state.courses}/>
         </div>
