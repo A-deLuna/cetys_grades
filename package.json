@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gomedun/cetys_grades"
+    "url": "https://github.com/onekorg/cetys_grades"
   },
   "keywords": [
     "react",
@@ -26,8 +26,8 @@
     "comment",
     "example"
   ],
-  "author": "Antonio de Luna feat. Jesus Lopez",
+  "author": "Antonio de Luna",
   "bugs": {
-    "url": "https://github.com/gomedun/cetys_grades/issues"
+    "url": "https://github.com/onekorg/cetys_grades/issues"
   }
 }
