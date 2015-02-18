@@ -127,46 +127,59 @@ app.post('/schedule', function(req, res) {
             request.post(postOptions, function(err, response, body) {
                 request.get(getOptions, function(err, response, body) {
                     var $ = cheerio.load(body);
-                    var rows = $('table').eq(4).children().children();
+                    var rows = $('table').eq(4).children();
                     var weekday = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
                     var jsonResponse = {
                         courses: []
                     };
                     for (; i < rows.length; i++) {
-                        var courseinfo = rows.eq(i).children().first().text();
+                        var courseinfo = rows.eq(i).children().first().children().html();
+                        
+                        console.log('courseinfo :' + courseinfo);
                         
                         var coursecode = courseinfo.split(/ /g)[0];
                         
+                        console.log('coursecode :' + coursecode);
+                        
                         var re = new RegExp(coursecode+"  ","g");
                         courseinfo = courseinfo.replace(re,"");
+                        
+                        console.log('courseinfo :' + courseinfo);
                         
                         var name = courseinfo.split(/<br>/g)[0];
                         var teacher = courseinfo.split(/<br>/g)[1];
                         var groupcode = courseinfo.split(/<br>/g)[2];
                         
-                        var courseinfo = courseinfo.split(/<br>/g)[3];
+                        courseinfo = courseinfo.split(/<br>/g)[3];
+                        
+                        console.log('courseinfo :' + courseinfo);
                         
                         var coursetype = courseinfo.substring(15,courseinfo.length-4);
                         
                         var course = new Course(coursecode, name, teacher, groupcode, coursetype);
                         for (j = 1; j < 7; j++) {
-                            var sessioninfo = rows.eq(i).children().eq(j).children().html();
-                            sessioninfo = sessioninfo.substring(15,sessioninfo.length-4);
+                            var sessioninfo = rows.eq(i).children().eq(j).children().first().html();
                             
-                            day = weekday[j-1];
+                            console.log('sessioninfo :' + sessioninfo);
                             
-                            sessioninfo = sessioninfo.split(/br/);
-                            
-                            room = sessioninfo[0];
-                            
-                            sessioninfo = sessioninfo[1].split(/-/);
-                            
-                            houri = sessioninfo[0];
-                            hourf = sessioninfo[1];
-							
-							var session = new Session(day, houri, hourf, room);
-                            
-                            course.sessions.push(session);
+                            if(sessioninfo != null){
+								sessioninfo = sessioninfo.substring(19,sessioninfo.length-4);
+								
+								day = weekday[j-1];
+								
+								sessioninfo = sessioninfo.split(/<br>/);
+								
+								room = sessioninfo[0];
+								
+								sessioninfo = sessioninfo[1].split(/-/);
+								
+								houri = sessioninfo[0];
+								hourf = sessioninfo[1];
+								
+								var session = new Session(day, houri, hourf, room);
+								
+								course.sessions.push(session);
+							}
                         }
                         jsonResponse.courses.push(course);
                     }
