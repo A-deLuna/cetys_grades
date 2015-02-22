@@ -25,19 +25,12 @@ app.post('/login', function(req, res){
     },
     followAllRedirects: true
   };
-  var getOptions= {
-    url: 'http://micampus.mxl.cetys.mx/portal/auth/portal/default/Academico/Consultar+boleta', 
-    jar: cookieJar
-  };
   request(options, function (error, response, body) {
     if (!error && response.statusCode === 200) { 
       request.post(postOptions, function(err, response, body){
         var cookies;
         if(!error && response.statusCode === 200){
           cookies = cookieJar.getCookieString('http://micampus.mxl.cetys.mx/portal/auth/portal/default/Academico/Consultar+boleta').trim().split(' ');
-          console.log(cookieJar.getCookieString('http://micampus.mxl.cetys.mx/portal/auth/portal/default/Academico/Consultar+boleta'));
-          console.log(cookies[0]);
-          console.log(cookies[1]);
           cookies.forEach(function(value){
             var c = value.split('=');
             var key = c[0];
